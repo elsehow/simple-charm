@@ -1,0 +1,28 @@
+{
+  "name": "spectral-charmer",
+  "version": "0.0.3",
+  "description": "livecode with your biosignals!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elsehow/spectral-charmer.git"
+  },
+  "keywords": [
+    "livecode",
+    "biosignals"
+  ],
+  "author": "elsehow",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/elsehow/spectral-charmer/issues"
+  },
+  "homepage": "https://github.com/elsehow/spectral-charmer#readme",
+  "dependencies": {
+    "hotload": "0.0.5",
+    "hotswap": "^1.1.0",
+    "kefir": "^3.1.0"
+  }
+}
