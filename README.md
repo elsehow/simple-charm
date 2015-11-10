@@ -27,26 +27,28 @@ may it serve you well
 in one file (example.js):
 
 ```javascript
- var spawn = require('child_process').spawn
-   , path = require('path')
-   , charm = require('..')
- 
- // one-script prints 1 to process.stdout, over and over
- var process1 = spawn('node', [path.join(__dirname, 'one-script.js')])
- // one-script prints 2 to process.stdout, over and over
- var process2 = spawn('node', [path.join(__dirname, 'two-script.js')])
- 
- // `charm` em with app.js
- var app = path.join(__dirname, '/app.js')
- // make sure to pass an absolute path
- s = charm(app, [process1.stdout, 'data'], [process2.stdout, 'data'])
- 
- // `charm` will return a stream of whatever app.js returns
- // one value in the stream for every time app.js was changed
- s.log('charm returned')
+var charm = require('simple-charm')
+  , spawn = require('child_process').spawn
+  , function path (fn) { 
+    return require('path').join(__dirname, fn)
+  }
+
+// one-script prints 1 to process.stdout, over and over
+var process1 = spawn('node', [pathTo('one-script.js')])
+// one-script prints 2 to process.stdout, over and over
+var process2 = spawn('node', [pathTo('two-script')])
+
+// `charm` em with app.js
+var app = pathTo('/app.js')
+// make sure to pass an absolute path
+s = charm(app, [process1.stdout, 'data'], [process2.stdout, 'data'])
+
+// `charm` will return a stream of whatever app.js returns
+// one value in the stream for every time app.js was changed
+s.log('charm returned')
 ```
 
-in another (app.js):
+in another file (app.js):
  
 ```javascript
 module.exports = function (oneStream, twoStream) {
@@ -74,6 +76,8 @@ or multiple streams:
 path refers to some file that exposes a function.
 the arguments to this function will be Kefir streams, 
  one for each `[emitter, event]` pair passed to charm.
+
+see examples/multiple-streams/ for an example with multiple in-streams
 
 this function returns a Kefir stream as well - 
 a stream of return values from the function in app.js
