@@ -2,34 +2,30 @@
  * elsehow
  * github.com/elsehow/simple-charm
  * BSD license
- * 
- * 
- * usage:
  *
- *  charm = require('simple-charmer')
- *  charm('./app.js', [process.stdout, 'data'], [socket, 'eeg'])
  *
- * api
+ *  TODO
+ *  should return a stream of path()()'s values
  *
  */
-
 var hotswap = require('hotswap') //overrides `require`
   , path = require('path')
 
-module.exports = function (path, ...emitters) {
+module.exports = function (path, ...emitterEventPairs) {
 
   function bootstrap (app) {
-    emitters.forEach((emitter) => {
-      emitter.removeAllListeners()
+    emitEventPairs.forEach(p => {
+      p[0].removeAllListeners(p[1])
     })
-    app(emitter)
+    var emitters = emitEventPairs.map(p => p[0])
+    app.apply(null, emitters)
   }
   
   var a = require(path.join(__dirname, path) )
   bootstrap(a)
-  hotswap.on('swap', function () {
+  hotswap.on('swap', () => {
     bootstrap(a)
-    console.log('successfully hotswapped! :)')
+    console.log('charmed! :)')
   })
 
 }

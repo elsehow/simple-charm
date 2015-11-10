@@ -1,12 +1,12 @@
 var Kefir = require('kefir')
 
-module.exports = function (emitter) {
-
-  var stream = Kefir.fromEvents(emitter, 'data')
+module.exports = function (oneStream, twoStream) {
 
   function timesTwo (x) { return x*2 }
   
-  stream.map(timesTwo).log()
+  var fours = oneStream.map(timesTwo).combine(twoStream, +)
+
+  return fours
 
 }
 
