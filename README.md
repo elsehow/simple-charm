@@ -2,6 +2,10 @@
 
 live-code with event emitters
 
+## installation
+
+    npm install simple-charm
+
 ## why
 
 livecoding is [really great](http://toplap.org/bricolage-the-world-of-live-coding/)
