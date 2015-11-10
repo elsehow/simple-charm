@@ -2,11 +2,8 @@
  * elsehow
  * github.com/elsehow/simple-charm
  * BSD license
- *
- *  TODO
- *  should return a stream of path()()'s values
- *
  */
+
 var path = require('path')
   , hotswap = require('hotswap') //overrides `require`
   , Kefir = require('kefir')
@@ -14,7 +11,10 @@ var path = require('path')
 module.exports = function () {
 
   // in-elegant spread operator
-  var argsList = Array.prototype.slice.call(arguments)
+  var argsList =  []
+  for (var i=0;i<arguments.length;i++) {
+    argsList.push(arguments[i])
+  }
   // script user puts in 
   var inScript = argsList[0]
   // pairs of [emitter, event]
