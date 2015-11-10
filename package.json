@@ -1,25 +1,26 @@
 {
-  "name": "spectral-charmer",
+  "name": "simple-charm",
   "version": "0.0.3",
-  "description": "livecode with your biosignals!",
+  "description": "livecode with event emitters",
   "main": "charm.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elsehow/spectral-charmer.git"
+    "url": "git+https://github.com/elsehow/simple-charm.git"
   },
   "keywords": [
     "livecode",
-    "biosignals"
+    "eventemitters",
+    "frp",
+    "kefir"
   ],
   "author": "elsehow",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/elsehow/spectral-charmer/issues"
+    "url": "https://github.com/elsehow/simple-charm/issues"
   },
-  "homepage": "https://github.com/elsehow/spectral-charmer#readme",
+  "homepage": "https://github.com/elsehow/simple-charm#readme",
   "dependencies": {
-    "hotload": "0.0.5",
     "hotswap": "^1.1.0",
     "kefir": "^3.1.0"
-  },
+  }
 }

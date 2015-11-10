@@ -16,17 +16,27 @@ may it serve you well
 
 ## usage:
 
-index.js:
+in one file (example.js):
 
-    var charm = require('simple-charmer')
-     , spawn = require('child_process')
+    var spawn = require('child_process').spawn
+      , path = require('path')
+      , charm = require('..')
     
-    var process1 = spawn('bash', ['some-script.sh'])
-    var process2 = spawn('bash', ['some-other-script.sh'])
+    // one-script prints 1 to process.stdout, over and over
+    var process1 = spawn('node', [path.join(__dirname, 'one-script.js')])
+    // one-script prints 2 to process.stdout, over and over
+    var process2 = spawn('node', [path.join(__dirname, 'two-script.js')])
+    
+    // `charm` em with app.js
+    var app = path.join(__dirname, '/app.js')
+    // make sure to pass an absolute path
+    s = charm(app, [process1.stdout, 'data'], [process2.stdout, 'data'])
+    
+    // `charm` will return a stream of whatever app.js returns
+    // one value in the stream for every time app.js was changed
+    s.log('charm returned')
 
-    charm('./app.js', [process.stdout, 'data'], [socket, 'eeg'])
-
-app.js:
+in another (app.js):
  
     module.exports = function (oneStream, twoStream) {
       var threeStream = oneStream.combine(twoStream, +)
@@ -44,7 +54,13 @@ map, filter, scan, [whatever](), and log as you go - everything will "just work"
     charm(path, [emitter, event], ...) 
 
 path refers to some file that exposes a function.
-
-argument to this function will be a Kefir stream, 
+the arguments to this function will be Kefir streams, 
  one for each `[emitter, event]` pair passed to charm.
+
+this function returns a Kefir stream as well - 
+a stream of return values from the function in app.js
+every time app.js is saved and hot-reloaded, 
+the new return value is emitted into to this stream.
+
+be sure to pass `charm` the absolute path of your script. see example.
 
