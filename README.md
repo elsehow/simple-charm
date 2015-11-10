@@ -24,14 +24,15 @@ may it serve you well
 
 ## usage:
 
-in one file (example.js):
+in one file (index.js):
 
 ```javascript
 var charm = require('simple-charm')
   , spawn = require('child_process').spawn
-  , function path (fn) { 
-    return require('path').join(__dirname, fn)
-  }
+
+function pathTo (filename) { 
+  return require('path').join(__dirname, filename)
+}
 
 // one-script prints 1 to process.stdout, over and over
 var process1 = spawn('node', [pathTo('one-script.js')])
