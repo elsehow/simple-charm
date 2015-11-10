@@ -1,7 +1,7 @@
 {
   "name": "simple-charm",
-  "version": "0.0.3",
-  "description": "livecode with event emitters",
+  "version": "0.1.0",
+  "description": "live-code with event emitters",
   "main": "charm.js",
   "repository": {
     "type": "git",
@@ -11,6 +11,7 @@
     "livecode",
     "eventemitters",
     "frp",
+    "hot reload",
     "kefir"
   ],
   "author": "elsehow",
