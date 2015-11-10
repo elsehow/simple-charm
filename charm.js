@@ -9,17 +9,24 @@ var path = require('path')
   , EventEmitter = require('events').EventEmitter
   , Kefir = require('kefir')
 
+// api:
+//
+//   charm(app, [emitter, event], ...)
+//
 module.exports = function () {
 
-  // in-elegant spread operator
+  // inelegant spread operator
   var argsList =  []
   for (var i=0;i<arguments.length;i++) {
     argsList.push(arguments[i])
   }
   // script user puts in 
-  var inScript = argsList[0]
+  var app = argsList[0]
   // pairs of [emitter, event]
   var emitEventPairs = argsList.slice(1)
+  // if using the single-stream api, turn this arg into a list
+  if (!emitEventPairs[0].length)
+    emitEventPairs = [emitEventPairs]
 
   // we run this fn at startup, 
   // and on reload (when the script is saved)
@@ -35,17 +42,24 @@ module.exports = function () {
     return app.apply(null, emitters)
   }
   
-  // we set up the hot-reload functionality here
-  // in doing so, we also create + return a Kefir stream
-  // where each value is something that
+  // we also create + return a Kefir stream
+  // where each value in the stream is the return value of `app`
+  // at the time it was saved
   var emitter = new EventEmitter()
-  var a = require(inScript)
-  var v = bootstrap(a)
-  emitter.emit('return-val', v)
-  hotswap.on('swap', function () {
+  var returnValStream = Kefir.fromEvents(emitter, 'return-val')
+  var a = require(app)
+  function startApp () {
     var v = bootstrap(a)
     emitter.emit('return-val', v)
-    console.log('charmed! :)')
+  }
+
+  // we set up the hot-reload functionality here
+  startApp()
+  hotswap.on('swap', function () {
+    startApp()
   })
-  return Kefir.fromEvents(emitter, 'return-val')
+
+  // return the stream of return values
+  return returnValStream
+
 }

@@ -8,9 +8,11 @@ livecoding is [really great](http://toplap.org/bricolage-the-world-of-live-codin
 
 long history in lisp and all that, still a core priority in clojure and clojurescript
 
+in javascript, event emitters are at the core of most asynchronous operations. i personally deal with streaming biosensor data, which sometimes comes over a bluetooth connection (serial) and sometimes through a websocket. in both cases, i need to parse and process the data. 
+
 simple-charm lets you live-code with event emitters in node
 
-use this to mix-and-match various types of emitters - [sockets](), [serial connections](), what have you
+use this to mix-and-match various types of emitters - [sockets](https://github.com/maxogden/websocket-stream), [serial connections](https://www.npmjs.com/package/serialport2), [any node stream](https://github.com/substack/stream-handbook), what have you
 
 may it serve you well
 
@@ -47,11 +49,17 @@ in another (app.js):
 
 now you can `node index.js` and, while it's running, live-code app.js
 
-map, filter, scan, [whatever](), and log as you go - everything will "just work"
+map, filter, scan, [whatever](https://rpominov.github.io/kefir/), and log as you go - everything will "just work"
 
 ## api
 
-    charm(path, [emitter, event], ...) 
+single stream:
+
+### charm(path, emitter, event)
+
+or multiple streams:
+
+### charm(path, [emitter, event], [emitter2, event2], ...)
 
 path refers to some file that exposes a function.
 the arguments to this function will be Kefir streams, 
@@ -62,5 +70,18 @@ a stream of return values from the function in app.js
 every time app.js is saved and hot-reloaded, 
 the new return value is emitted into to this stream.
 
+see examples/logging/ for one use case of this
+
+## debugging
+
 be sure to pass `charm` the absolute path of your script. see example.
 
+also, be sure to include change_code=1 at the bottom of every app.js
+
+    module.change_code = 1   
+
+this allows us to hotswap the functions on change.
+
+## LICENSE
+
+BSD-2-Clause
