@@ -6,6 +6,7 @@
 
 var path = require('path')
   , hotswap = require('hotswap') //overrides `require`
+  , EventEmitter = require('events').EventEmitter
   , Kefir = require('kefir')
 
 module.exports = function () {
@@ -37,12 +38,14 @@ module.exports = function () {
   // we set up the hot-reload functionality here
   // in doing so, we also create + return a Kefir stream
   // where each value is something that
-  return Kefir.stream(function (emitter) {
-    var a = require(inScript)
-    emitter.emit(bootstrap(a))
-    hotswap.on('swap', function () {
-      emitter.emit(bootstrap(a))
-      console.log('charmed! :)')
-    })
+  var emitter = new EventEmitter()
+  var a = require(inScript)
+  var v = bootstrap(a)
+  emitter.emit('return-val', v)
+  hotswap.on('swap', function () {
+    var v = bootstrap(a)
+    emitter.emit('return-val', v)
+    console.log('charmed! :)')
   })
+  return Kefir.fromEvents(emitter, 'return-val')
 }
