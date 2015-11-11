@@ -39,34 +39,31 @@ function pathTo (filename) {
 }
 
 // one-script prints 1 to process.stdout, over and over
-var process1 = spawn('node', [pathTo('one-script.js')])
-// one-script prints 2 to process.stdout, over and over
-var process2 = spawn('node', [pathTo('two-script')])
+var process  = spawn('node', [pathTo('one-script.js')])
 
 // `charm` em with app.js
 var app = pathTo('/app.js')
 // make sure to pass an absolute path
-s = charm(app, [process1.stdout, 'data'], [process2.stdout, 'data'])
-
-// `charm` will return a stream of whatever app.js returns
-// one value in the stream for every time app.js was changed
-s.log('charm returned')
+charm(app, process.stdout, 'data')
 ```
 
 in another file (app.js):
  
 ```javascript
-module.exports = function (oneStream, twoStream) {
-  var threeStream = oneStream.combine(twoStream, +)
+module.exports = function (oneStream) {
+  function addTwo (x) { return x+2 }
+  var threeStream = oneStream.map(addTwo)
   threeStream.log()
 }
 
 module.change_code = 1   // important - don't forget
 ```
 
-now you can `node index.js` and, while it's running, live-code app.js
+now you can `node index.js` and, while it's running, live-code app.js!
 
 map, filter, scan, [whatever](https://rpominov.github.io/kefir/), and log as you go - everything will "just work"
+
+see examples/ for working with multiple streams, returning stuff back to inde.js (e.g. for logging), etc.
 
 ## api
 
