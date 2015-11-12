@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/elsehow/simple-charm#readme",
   "dependencies": {
+    "async": "^1.5.0",
     "hotswap": "^1.1.0",
-    "kefir": "^3.1.0"
+    "kefir": "^3.1.0",
+    "syntax-error": "^1.1.4"
   }
 }
