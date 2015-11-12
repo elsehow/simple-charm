@@ -2,7 +2,7 @@ var spawn = require('child_process').spawn
   , path = require('path')
   , charm = require('../..')
 
-var process = spawn('node', [path.join(__dirname, 'random-stream.js')])
+var process = spawn('node', [path.join(__dirname, 'script.js')])
 
 // `charm` em with app.js
 var app = path.join(__dirname, '/app.js')
