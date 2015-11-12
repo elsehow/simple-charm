@@ -20,11 +20,11 @@ module.exports = function () {
   for (var i=0;i<arguments.length;i++) {
     argsList.push(arguments[i])
   }
-  // script user puts in 
+  // the script user puts in 
   var app = argsList[0]
-  // pairs of [emitter, event]
+  // the pairs of [emitter, event]
   var emitEventPairs = argsList.slice(1)
-  // if using the single-stream api, turn this arg into a list
+  // if the user was using the single-stream api, turn this arg into a list
   if (!emitEventPairs[0].length)
     emitEventPairs = [emitEventPairs]
 
@@ -39,7 +39,19 @@ module.exports = function () {
     var emitters = emitEventPairs.map(function (p) {
       return Kefir.fromEvents(p[0], p[1])
     })
-    return app.apply(null, emitters)
+
+    // TODO
+    // first, we parse the app script for errors
+    // if we catch one, we print it instead of crashing!
+
+    // next, we try/catch executing the function
+    try {
+      return app.apply(null, emitters)
+    } catch (e) {
+      // if there's an execution error, we log it instead of crashing!
+      console.error('Error!', e)
+      return
+    }
   }
   
   // we also create + return a Kefir stream
