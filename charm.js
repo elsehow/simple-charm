@@ -75,7 +75,7 @@ module.exports = function () {
   // if we catch one, we print it instead of crashing!
   startApp()
   hotswap.on('error', function (err) {
-    console.log(err)
+    console.log('\n'+err+'\n')
     removeAllListeners() // this will effectively taredown teha pp
   })
   hotswap.on('swap', function () {
