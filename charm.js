@@ -10,6 +10,11 @@ var path = require('path')
   , fs = require('fs')
   , EventEmitter = require('events').EventEmitter
   , Kefir = require('kefir')
+  , clc = require('cli-color');
+
+function printError (e) {
+  console.log(clc.red('\n'+e+'\n'))
+}
 
 // api:
 //
@@ -45,17 +50,16 @@ module.exports = function () {
     removeAllListeners()
 
     // turn the pairs into Kefir streams
-    var emitters = emitEventPairs.map(function (p) {
+    var kefirStreams = emitEventPairs.map(function (p) {
       return Kefir.fromEvents(p[0], p[1])
     })
 
     // next, we try/catch executing the function
+    // TODO - does this do anything?
     try {
-      return appFn.apply(null, emitters)
+      return appFn.apply(null, kefirStreams)
     } catch (e) {
-      // if there's an execution error, we log it instead of crashing!
-      console.error('Error!', e)
-      return
+      printError(e)
     }
   }
   
@@ -64,6 +68,12 @@ module.exports = function () {
   // at the time it was saved
   var emitter = new EventEmitter()
   var returnValStream = Kefir.fromEvents(emitter, 'return-val')
+
+  // that hotswap module overwrites 'require'
+  // because we add a module.change_code to it,
+  // it will hotswap, and `hotswap` (below) will emit an event 'swap'
+  //
+  // TODO - NO MORE adding that special require statement
   var a = require(appPath)
   function startApp () {
     var v = bootstrap(a)
@@ -75,7 +85,7 @@ module.exports = function () {
   // if we catch one, we print it instead of crashing!
   startApp()
   hotswap.on('error', function (err) {
-    console.log('\n'+err+'\n')
+    printError(err)
     removeAllListeners() // this will effectively taredown teha pp
   })
   hotswap.on('swap', function () {

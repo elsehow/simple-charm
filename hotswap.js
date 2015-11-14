@@ -120,7 +120,7 @@ function require_force(name)
 
 function try_require_file(filename)
 {
-  var err = check(fs.readFileSync(filename)) 
+  var err = check(fs.readFileSync(filename), filename) 
   if (err) {
     emitter.emit('error', err)
   }
@@ -141,7 +141,7 @@ function require_file(filename)
 	var reg_required = !current_extensions[ext];
 	var result;
 	if (reg_required) register_extension(ext, type);
-  var err = check(fs.readFileSync(filename)) 
+  var err = check(fs.readFileSync(filename), filename) 
   if (err) {
     emitter.emit('error', err)
   }

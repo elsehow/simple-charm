@@ -2,8 +2,8 @@ module.exports = function (stream) {
 
   stream
     .map(Number)
-    .map(function (x) { 
-      return x * 3
+    .map(function (x) 
+      return x
     })
     .log()
 }
