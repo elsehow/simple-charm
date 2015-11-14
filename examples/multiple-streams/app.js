@@ -13,5 +13,3 @@ module.exports = function (oneStream, twoStream) {
   return fours
 
 }
-
-module.change_code = 1

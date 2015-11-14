@@ -7,5 +7,3 @@ module.exports = function (stream) {
   return s
 
 }
-
-module.change_code = 1

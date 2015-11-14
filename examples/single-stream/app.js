@@ -2,10 +2,9 @@ module.exports = function (stream) {
 
   stream
     .map(Number)
-    .map(function (x) 
-      return x
+    .map(function (x) {
+      return x * 2
     })
     .log()
 }
 
-module.change_code = 1
