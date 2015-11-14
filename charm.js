@@ -5,7 +5,6 @@
  */
 
 var path = require('path')
-  , hotswap = require('./hotswap') //overrides `require`
   , check = require('syntax-error')
   , fs = require('fs')
   , EventEmitter = require('events').EventEmitter
@@ -22,7 +21,6 @@ function printError (e) {
 //
 module.exports = function () {
 
-  // inelegant spread operator
   var argsList =  []
   for (var i=0;i<arguments.length;i++) {
     argsList.push(arguments[i])
@@ -34,6 +32,20 @@ module.exports = function () {
   // if the user was using the single-stream api, turn this arg into a list
   if (!emitEventPairs[0].length)
     emitEventPairs = [emitEventPairs]
+
+  // this overrides `require`
+  // but only for `appPath`
+  // it will cause appPath's require() statement to hot reload!
+  //
+  // `hotswap` here is an event emitter
+  // it will emit:
+  //
+  //   - 'error' (err) -- an error
+  //   - 'swap'  ()    -- notification that appPath was swapped.
+  //
+  var hotswap = require('./hotswap')(appPath) 
+
+  // inelegant spread operator
 
   // fn to remove existing listeners from the emitters
   function removeAllListeners () {

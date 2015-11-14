@@ -55,8 +55,6 @@ module.exports = function (oneStream) {
   var threeStream = oneStream.map(addTwo)
   threeStream.log()
 }
-
-module.change_code = 1   // important - don't forget
 ```
 
 now you can `node index.js` and, while it's running, live-code app.js!
@@ -91,12 +89,6 @@ see examples/logging/ for one use case of this
 ## debugging
 
 be sure to pass `charm` the absolute path of your script. see example.
-
-also, be sure to include change_code=1 at the bottom of every app.js
-
-    module.change_code = 1   
-
-this allows us to hotswap the functions on change.
 
 ## LICENSE
 
