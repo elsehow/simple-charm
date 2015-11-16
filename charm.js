@@ -33,8 +33,8 @@ module.exports = function () {
   if (!emitEventPairs[0].length)
     emitEventPairs = [emitEventPairs]
 
-  // this overrides `require`
-  // but only for `appPath`
+  // hotswap overrides `require`
+  // but this will only matter for for `appPath`.
   // it will cause appPath's require() statement to hot reload!
   //
   // `hotswap` here is an event emitter
@@ -43,7 +43,7 @@ module.exports = function () {
   //   - 'error' (err) -- an error
   //   - 'swap'  ()    -- notification that appPath was swapped.
   //
-  var hotswap = require('./hotswap')(appPath) 
+  var hotswap = require('hotmop')(appPath) 
 
   // inelegant spread operator
 
