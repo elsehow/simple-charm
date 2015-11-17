@@ -1,13 +1,14 @@
 /* SIMPLE CHARM
  * elsehow
  * github.com/elsehow/simple-charm
- * BSD license
+ * BSD 2-Clause
  */
 
 var charm = require('easy-charm')
   , Kefir = require('kefir')
   , clc = require('cli-color');
 
+// colorfully print errors
 function printError (e) {
   console.log(clc.red('\n'+e+'\n'))
 }
@@ -41,12 +42,10 @@ module.exports = function () {
   // log errors
   em.on('error', printError)
 
+  // we return a stream, where
+  // each value in the stream is the 
+  // return value of `app` at the
+  // time it was saved
   return Kefir.fromEvents(em, 'return-val')
-  
-  // we also create + return a Kefir stream
-  // where each value in the stream is the return value of `app`
-  // at the time it was saved
-  var emitter = new EventEmitter()
-  var returnValStream = Kefir.fromEvents(emitter, 'return-val')
 
 }
