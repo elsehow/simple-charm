@@ -1,12 +1,14 @@
-
-hotswap its own module
-
-sample rate.......programmers need to think about that
+done! 11/16
+-- hotswap its own module
 
 done! 11/13
 ---programmers should NOT think about magic module.change_code---
 
+runtime errors DO crash + stop stuff.. what can be done?
+
+## stuff that is probably spectral-charmer domain
+
+sample rate.......programmers need to think about that
+
 graphing
 
-
-runtime errors DO crash + stop stuff

@@ -1,30 +1,10 @@
 # simple charm
 
-live-code with event emitters
+live-code with [Kefir streams](https://rpominov.github.io/kefir/), via event emitters
 
 ## installation
 
     npm install simple-charm
-
-## why
-
-livecoding is [really great](http://toplap.org/bricolage-the-world-of-live-coding/)
-
-long history in lisp and all that, still a core priority in clojure and clojurescript
-
-in javascript, event emitters are at the core of most asynchronous operations. i personally deal with streaming biosensor data, which sometimes comes over a bluetooth connection (serial) and sometimes through a websocket. in both cases, i need to parse and process the data. 
-
-### live-coding with emitters
-
-simple-charm lets you live-code with event emitters in node
-
-it turns the events from an emitter into [Kefir streams](https://rpominov.github.io/kefir/) - a flexible, discretized data sturcture that lets you map, filter, buffer, etc... across many values over time.
-
-then, you write a script that processes the stream. you can change this script in real time, and your emitter's values will be sent through updated versions, without a hitch.
-
-use this to mix-and-match various types of emitters - [sockets](https://github.com/maxogden/websocket-stream), [serial connections](https://www.npmjs.com/package/serialport2), [any node stream](https://github.com/substack/stream-handbook), what have you
-
-may it serve you well
 
 ## usage:
 
@@ -61,7 +41,29 @@ now you can `node index.js` and, while it's running, live-code app.js!
 
 map, filter, scan, [whatever](https://rpominov.github.io/kefir/), and log as you go - everything will "just work"
 
+you can even make syntax errors - it will catch them without stopping your streams!
+
 see examples/ for working with multiple streams, returning stuff back to inde.js (e.g. for logging), etc.
+
+## why
+
+livecoding is [really great](http://toplap.org/bricolage-the-world-of-live-coding/)
+
+long history in lisp and all that, still a core priority in clojure and clojurescript
+
+in javascript, event emitters are at the core of most asynchronous operations. i personally deal with streaming biosensor data, which sometimes comes over a bluetooth connection (serial) and sometimes through a websocket. in both cases, i need to parse and process the data. 
+
+### live-coding with emitters
+
+simple-charm lets you live-code with event emitters in node
+
+it turns the events from an emitter into [Kefir streams](https://rpominov.github.io/kefir/) - a flexible, discretized data sturcture that lets you map, filter, buffer, etc... across many values over time.
+
+then, you write a script that processes the stream. you can change this script in real time, and your emitter's values will be sent through updated versions, without a hitch.
+
+use this to mix-and-match various types of emitters - [sockets](https://github.com/maxogden/websocket-stream), [serial connections](https://www.npmjs.com/package/serialport2), [any node stream](https://github.com/substack/stream-handbook), what have you
+
+may it serve you well
 
 ## api
 
@@ -85,6 +87,8 @@ every time app.js is saved and hot-reloaded,
 the new return value is emitted into to this stream.
 
 see examples/logging/ for one use case of this
+
+
 
 ## debugging
 
