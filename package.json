@@ -23,7 +23,7 @@
   "homepage": "https://github.com/elsehow/simple-charm#readme",
   "dependencies": {
     "cli-color": "^1.1.0",
-    "easy-charm": "^0.2.3",
+    "easy-charm": "^0.2.4",
     "kefir": "^3.1.0"
   }
 }
