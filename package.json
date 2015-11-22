@@ -1,6 +1,6 @@
 {
   "name": "simple-charm",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "live-code with event emitters",
   "main": "charm.js",
   "repository": {
@@ -23,7 +23,7 @@
   "homepage": "https://github.com/elsehow/simple-charm#readme",
   "dependencies": {
     "cli-color": "^1.1.0",
-    "easy-charm": "^0.2.5",
+    "easy-charm": "^0.2.6",
     "kefir": "^3.1.0"
   }
 }
